@@ -143,7 +143,7 @@ function create (){
     //UI-BG
     var bgs = this.add.graphics();
     bgs.fillStyle(0x331111,0.8);
-    bgs.fillRect(0, 470, 400, 100);
+    bgs.fillRect(0, 470, 400, 200);
 
     enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
