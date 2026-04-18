@@ -33,9 +33,41 @@ var todo = 0;
 var cursors;
 var freemov=false;
 var friendcounter=0;
-const pnouns = ["HE/HIM", "SHE/HER", "WHEE/WHIRR", "KNEE/HURT", "SCHMEE/SCHLIM", "FLEA (from the red hot chili peppers)", "AAAAAAAAAAAAAAAA", "CE/DAR", "FE/MUR"];
+const pnouns =
+    ["HE/HIM",
+    "SHE/HER",
+    "WHEE/WHIRR",
+    "KNEE/HURT",
+    "SCHMEE/SCHLIM",
+    "FLEA (from the red hot chili peppers)",
+    "AAAAAAAAAAAAAAAA",
+    "CE/DAR",
+    "FE/MUR",
+    "BEPIS",
+    "GIT/\'EM"];
 var dialogue_index = 0;
-var dialogue_words = ["You greet the stranger.", "They say hi.", "You ask what their pronouns are.", "They say.", "They say..", "They say...", "ERROR", "The new friend joined your party."];
+var dialogue_words =
+    ["You greet the stranger.",
+    "They say hi.",
+    "You ask what their pronouns are.",
+    "They say.",
+    "They say..",
+    "They say...",
+    "ERROR",
+    "The new friend joined your party."];
+var ending_words =
+    ["You met so many friends!",
+    "Probably.",
+    "Who was your favorite new friend?",
+    "Wait.",
+    "Wait..",
+    "Wait...",
+    "You didn't bother to ask any of them their names?",
+    "Wow.",
+    "Kinda rude.",
+    "So much for the tolerant left.",
+    "-errorplaceholder-",
+    "~THE END~"];
 var debugbox;
 var friendlist = [];
 
@@ -51,6 +83,21 @@ function timerCode() {
     }
     else {
         setTimeout(timerCode, 2000);
+    }
+}
+
+function timerCode2() {
+    dm.innerHTML=ending_words[dialogue_index];
+    dialogue_index++;
+    if(dialogue_index>11){}
+    else if (dialogue_index==4||dialogue_index==5) {
+        setTimeout(timerCode2, 700);
+    }
+    else if(dialogue_index==7){
+        setTimeout(timerCode2, 4000);
+    }
+    else {
+        setTimeout(timerCode2, 2000);
     }
 }
 
@@ -143,7 +190,7 @@ function create (){
     //UI-BG
     var bgs = this.add.graphics();
     bgs.fillStyle(0x331111,0.8);
-    bgs.fillRect(0, 470, 400, 200);
+    bgs.fillRect(0, 470, 600, 200);
 
     enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
@@ -269,6 +316,11 @@ function update (){
             }
             processing = 100;
         }
+        else if(suggestion == "end"){
+            todo = 68;
+            processing = 3;
+            wordofdog = "Ending...";
+        }
         else{
             processing = 100; //command not found
         }
@@ -357,6 +409,28 @@ function update (){
                 playerSelf.y+=30;
                 gameOver = true;
                 processing=100;
+                break;
+            case 68:
+                dialogue_index=0;
+                dm.innerHTML=ending_words[dialogue_index];
+                dialogue_index++;
+                setTimeout(timerCode2, 2000);
+                todo=69;
+                break;
+            case 69:
+                //while ending runs
+                if(dialogue_index==1){
+                    playerSelf.anims.play("hands");
+                }
+                if(dialogue_index==2){
+                    playerSelf.anims.play("stand");
+                }
+                if(dialogue_index==10){
+                    playerSelf.angle=-90;
+                    playerSelf.x-=50;
+                    playerSelf.y+=30;
+                    dialogue_index++;
+                }
                 break;
             default:
         }
