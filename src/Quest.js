@@ -152,6 +152,21 @@ function create (){
         frames: 'you',
         frameRate: 1
     });
+    this.anims.create({
+        key: 'happy',
+        frames: [ { key: 'you', frame: 9 } ],
+        frameRate: 20
+    });
+    this.anims.create({
+        key: 'sad',
+        frames: [ { key: 'you', frame: 10 } ],
+        frameRate: 20
+    });
+    this.anims.create({
+        key: 'depressed',
+        frames: [ { key: 'you', frame: 11 } ],
+        frameRate: 20
+    });
 
     //create narrator box
     const container1 = document.getElementById('narration-area');
@@ -216,7 +231,7 @@ function create (){
     cursors = this.input.keyboard.createCursorKeys();
 
     //raise-flag
-    flag = this.physics.add.sprite(350, 150, 'flag');
+    flag = this.physics.add.sprite(400, 150, 'flag');
     flag.setScale(0.4);
 }
 
@@ -420,10 +435,22 @@ function update (){
             case 69:
                 //while ending runs
                 if(dialogue_index==1){
-                    playerSelf.anims.play("hands");
+                    playerSelf.anims.play("happy");
                 }
                 if(dialogue_index==2){
                     playerSelf.anims.play("stand");
+                }
+                if(dialogue_index==3){
+                    playerSelf.anims.play("happy");
+                }
+                if(dialogue_index==4){
+                    playerSelf.anims.play("stand");
+                }
+                if(dialogue_index==8){
+                    playerSelf.anims.play("sad");
+                }
+                if(dialogue_index==9){
+                    playerSelf.anims.play("depressed");
                 }
                 if(dialogue_index==10){
                     playerSelf.angle=-90;
@@ -444,13 +471,14 @@ function update (){
         playerHolder.setDepth(10);
     }
     if (friend.x<200){
-        friend.x=400;
+        //friend.x=400;
+        friend.x=Math.random()*200+400
         friend.y=-100;
         friend.body.velocity.x=0;
         processing=100;
     }
     //if(processing==3&&friend.y==-100){
-    if(friendcounter==2&&friend.y==-100){
+    if(friendcounter==1&&friend.y==-100){
         friendcounter=0;
         friend.body.velocity.y=1000;
     }
