@@ -343,7 +343,7 @@ function update (){
             }
             processing = 100;
         }
-        else if(suggestion == "end"){
+        else if(suggestion == "leave"){
             todo = 68;
             processing = 3;
             wordofdog = "Ending...";
