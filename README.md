@@ -1,6 +1,6 @@
 QUEERQUEST
->flag to check flag
->greet to greet strangers
->return to go back to the left
->cat to greet cat
->leave to leave room
+type "flag" to check flag
+type "return" to go back to the left
+type "greet" to greet strangers
+type "cat" to greet cat
+type "leave" to leave room
