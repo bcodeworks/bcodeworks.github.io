@@ -70,6 +70,8 @@ var ending_words =
     "~THE END~"];
 var debugbox;
 var friendlist = [];
+var bg1;
+var bg2;
 
 function timerCode() {
     dm.innerHTML=dialogue_words[dialogue_index];
@@ -103,6 +105,7 @@ function timerCode2() {
 
 function preload (){
     this.load.image('room', 'assets/room0.png');
+    this.load.image('home', 'assets/home.webp');
     this.load.image('flag', 'assets/asset1.png');
     this.load.spritesheet('you', 'assets/spritesheet_1.png', { frameWidth: 60, frameHeight: 100 });
     this.load.spritesheet('stuff', 'assets/spritesheet_1.png', { frameWidth: 120, frameHeight: 100 });
@@ -115,7 +118,7 @@ function preload (){
 }
 
 function create (){
-    this.add.image(400, 300, 'room');
+    bg1 = this.add.image(400, 300, 'room');
 
     targetX = spawnX;
     targetY = spawnY;
@@ -205,7 +208,8 @@ function create (){
     //UI-BG
     var bgs = this.add.graphics();
     bgs.fillStyle(0x331111,0.8);
-    bgs.fillRect(0, 470, 600, 200);
+    bgs.fillRect(0, 470, 500, 200);
+    bgs.setDepth(20);
 
     enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
@@ -430,10 +434,19 @@ function update (){
                 dm.innerHTML=ending_words[dialogue_index];
                 dialogue_index++;
                 setTimeout(timerCode2, 2000);
+                bg2 = this.add.image(400, 230, 'home');
+                bg1.destroy();
+                //playerHolder.setDepth(1);
+                bg2.setScale(0.7);
+                playerSelf.setScale(0.7);
+                playerSelf.x=360;
+                playerSelf.y=420;
+                friend.y=8000;
                 todo=69;
                 break;
             case 69:
                 //while ending runs
+                //these all run a million times redundantly
                 if(dialogue_index==1){
                     playerSelf.anims.play("happy");
                 }
