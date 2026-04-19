@@ -9,6 +9,7 @@ var config = {
             debug: false
         }
     },
+    pixelArt: true,
     scene: {
         preload: preload,
         create: create,
@@ -38,7 +39,7 @@ const pnouns =
     "SHE/HER",
     "WHEE/WHIRR",
     "KNEE/HURT",
-    "SCHMEE/SCHLIM",
+    "SKI/SKIM",
     "FLEA (from the red hot chili peppers)",
     "AAAAAAAAAAAAAAAA",
     "CE/DAR",
@@ -72,19 +73,20 @@ var debugbox;
 var friendlist = [];
 var bg1;
 var bg2;
+const TALKSPEED = 1;
 
 function timerCode() {
     dm.innerHTML=dialogue_words[dialogue_index];
     dialogue_index++;
     if(dialogue_index>7){}
     else if (dialogue_index==4||dialogue_index==5) {
-        setTimeout(timerCode, 700);
+        setTimeout(timerCode, 700/TALKSPEED);
     }
     else if(dialogue_index==7){
-        setTimeout(timerCode, 4000);
+        setTimeout(timerCode, 4000/TALKSPEED);
     }
     else {
-        setTimeout(timerCode, 2000);
+        setTimeout(timerCode, 2000/TALKSPEED);
     }
 }
 
@@ -93,37 +95,44 @@ function timerCode2() {
     dialogue_index++;
     if(dialogue_index>11){}
     else if (dialogue_index==4||dialogue_index==5) {
-        setTimeout(timerCode2, 700);
+        setTimeout(timerCode2, 700/TALKSPEED);
     }
     else if(dialogue_index==7){
-        setTimeout(timerCode2, 4000);
+        setTimeout(timerCode2, 4000/TALKSPEED);
     }
     else {
-        setTimeout(timerCode2, 2000);
+        setTimeout(timerCode2, 2000/TALKSPEED);
     }
 }
 
 function preload (){
     this.load.image('room', 'assets/room0.png');
-    this.load.image('home', 'assets/home.webp');
+    this.load.image('hall', 'assets/hall.webp');
     this.load.spritesheet('flag', 'assets/flag1.png', { frameWidth: 800, frameHeight: 600 });
     this.load.spritesheet('you', 'assets/spritesheet_1b.png', { frameWidth: 60, frameHeight: 100 });
-    this.load.spritesheet('stuff', 'assets/spritesheet_1b.png', { frameWidth: 120, frameHeight: 100 });
+    //this.load.spritesheet('stuff', 'assets/spritesheet_1b.png', { frameWidth: 120, frameHeight: 100 });
     this.load.spritesheet('head', 'assets/spritesheet_1b.png', { frameWidth: 60, frameHeight: 40 });
     //this.load.image('sky', 'assets/sky.png');
     //this.load.image('ground', 'assets/platform.png');
     this.load.image('star', 'assets/star.png');
     //this.load.image('bomb', 'assets/bomb.png');
     //this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+
+    this.load.audio('room', 'assets/WaitingRoom6.mp3');
+    this.load.audio('hall', 'assets/MadeUp-Beam-8D.mp3');
+    this.load.audio('end', 'assets/RobotsFTW.mp3');
 }
 
 function create (){
     bg1 = this.add.image(400, 300, 'room');
+    this.musicRoom = this.sound.add('room');
+    this.musicRoom.play();
 
     targetX = spawnX;
     targetY = spawnY;
 
     playerSelf = this.physics.add.sprite(spawnX, spawnY, 'you');
+    playerSelf.setScale(2.0);
     playerHolder = playerSelf;
     //playerSelf.setCollideWorldBounds(true);
 
@@ -224,6 +233,7 @@ function create (){
     friend = this.physics.add.sprite(400, 350, 'you');
     friend.anims.play('stand');
     friend.setFlipX(true);
+    friend.setScale(2.0);
 
     friend.setDepth(5);
     playerSelf.setDepth(10);
@@ -243,7 +253,7 @@ function create (){
 
     //raise-flag
     flag = this.physics.add.sprite(400, 150, 'flag');
-    flag.setScale(0.4);
+    flag.setScale(0.5);
     flag.anims.play("waving");
 }
 
@@ -339,7 +349,7 @@ function update (){
                 wordofdog = "No friends yet!";
             }
             else{
-                wordofdog = "Friends: " + friendlist;
+                wordofdog = "Friends: " + friendlist.join(", ");
             }
             processing = 100;
         }
@@ -442,14 +452,21 @@ function update (){
                 dm.innerHTML=ending_words[dialogue_index];
                 dialogue_index++;
                 setTimeout(timerCode2, 2000);
-                bg2 = this.add.image(400, 230, 'home');
+                bg2 = this.add.image(400, 230, 'hall');
                 bg1.destroy();
+                flag.destroy();
                 //playerHolder.setDepth(1);
                 bg2.setScale(0.7);
-                playerSelf.setScale(0.8);
-                playerSelf.x=360;
-                playerSelf.y=420;
+                //playerSelf.setScale(0.8);
+                //playerSelf.x=360;
+                //playerSelf.y=420;
                 friend.y=8000;
+                playerSelf.setScale(2);
+                playerSelf.x=440;
+                playerSelf.y=300;
+                this.musicRoom.stop();
+                this.musicHall = this.sound.add('hall');
+                this.musicHall.play();
                 todo=69;
                 break;
             case 69:
@@ -459,13 +476,19 @@ function update (){
                     playerSelf.anims.play("happy");
                 }
                 if(dialogue_index==2){
-                    playerSelf.anims.play("stand");
+                    if(friendlist.length<1){
+                        playerSelf.anims.play("stand");
+                    }
                 }
                 if(dialogue_index==3){
+                    //bg2.setScale(3);
+                    //bg2.x=470;
+                    //bg2.y=-500;
                     playerSelf.anims.play("happy");
                 }
                 if(dialogue_index==4){
                     playerSelf.anims.play("stand");
+                    this.musicHall.stop();
                 }
                 if(dialogue_index==8){
                     playerSelf.anims.play("sad");
@@ -476,13 +499,23 @@ function update (){
                 if(dialogue_index==10){
                     dm.style.fontSize = "14px";
                     playerSelf.angle=-90;
-                    playerSelf.x-=50;
-                    playerSelf.y+=30;
+                    playerSelf.x-=130;
+                    playerSelf.y+=60;
                     dialogue_index++;
                     box.value = "";
                 }
                 if(dialogue_index==12){
+                    dialogue_index=13;
                     dm.style.color="white";
+                    this.sound.setVolume(0.5);
+                    this.sound.play('end');
+                    var musicEnd = this.sound.add('end');
+                    musicEnd.play();
+                    /*this.tweens.add({
+                        targets:  musicEnd,
+                        volume:   0,
+                        duration: 500
+                    });*/
                 }
                 break;
             default:
@@ -504,7 +537,7 @@ function update (){
         processing=100;
     }
     //if(processing==3&&friend.y==-100){
-    if(friendcounter==1&&friend.y==-100){
+    if(friendcounter==0&&friend.y==-100){
         friendcounter=0;
         friend.body.velocity.y=1000;
     }
