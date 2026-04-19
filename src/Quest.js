@@ -186,7 +186,7 @@ function create (){
     dm.style.left = "20px";
     dm.style.color = "magenta";
     dm.style.fontSize = "20px";
-    dm_words = document.createTextNode("You're alone in a queer room.");
+    dm_words = document.createTextNode("You're standing in a queer room.");
     dm.appendChild(dm_words);
     container1.appendChild(dm);
     //create suggestion box
