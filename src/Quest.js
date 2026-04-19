@@ -217,7 +217,7 @@ function create (){
     const container1 = document.getElementById('narration-area');
     dm = document.createElement('p');
     dm.style.position = "absolute";
-    dm.style.top = "469px";
+    dm.style.top = "489px";
     dm.style.left = "20px";
     dm.style.color = "magenta";
     dm.style.fontSize = "20px";
@@ -229,7 +229,7 @@ function create (){
     box = document.createElement('input');
     box.setAttribute('type', 'text'); //unnecessary, default
     box.style.position = "absolute";
-    box.style.top = "525px";
+    box.style.top = "540px";
     box.style.left = "20px";
     box.style.color = "black";
     box.style.fontSize = "20px";
@@ -250,7 +250,7 @@ function create (){
     //UI-BG
     var bgs = this.add.graphics();
     bgs.fillStyle(0x331111,0.8);
-    bgs.fillRect(0, 470, 500, 200);
+    bgs.fillRect(0, 490, 500, 200);
     bgs.setDepth(20);
 
     enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
