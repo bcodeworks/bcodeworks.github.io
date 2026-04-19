@@ -74,6 +74,7 @@ var friendlist = [];
 var bg1;
 var bg2;
 const TALKSPEED = 1;
+var PETMODE = 0;
 
 function timerCode() {
     dm.innerHTML=dialogue_words[dialogue_index];
@@ -114,20 +115,20 @@ function preload (){
     this.load.spritesheet('head', 'assets/spritesheet_1b.png', { frameWidth: 60, frameHeight: 40 });
     //this.load.image('sky', 'assets/sky.png');
     //this.load.image('ground', 'assets/platform.png');
-    this.load.image('star', 'assets/star.png');
+    this.load.image('cat', 'assets/cat.png');
     //this.load.image('bomb', 'assets/bomb.png');
     //this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
 
-    this.load.audio('room', 'assets/WaitingRoom6.mp3');
-    this.load.audio('hall', 'assets/MadeUp-Beam-8D.mp3');
-    this.load.audio('end', 'assets/RobotsFTW.mp3');
+    //this.load.audio('room', 'assets/WaitingRoom6.mp3');
+    //this.load.audio('hall', 'assets/MadeUp-Beam-8D.mp3');
+    //this.load.audio('end', 'assets/RobotsFTW.mp3');
 }
 
 function create (){
     this.textures.get('flag').setFilter(Phaser.Textures.FilterMode.LINEAR);
     bg1 = this.add.image(400, 300, 'room');
-    this.musicRoom = this.sound.add('room');
-    this.musicRoom.play();
+    //this.musicRoom = this.sound.add('room');
+    //this.musicRoom.play();
 
     targetX = spawnX;
     targetY = spawnY;
@@ -263,6 +264,10 @@ function create (){
     flag = this.physics.add.sprite(400, 150, 'flag');
     flag.setScale(0.5);
     flag.anims.play("waving");
+
+    //create kitty
+    powerfulcat = this.physics.add.sprite(650, 500, 'cat');
+    powerfulcat.setScale(5);
 }
 
 function update (){
@@ -313,20 +318,22 @@ function update (){
             todo=66;
             wordofdog = "You have passed.";
         }
-        else if(suggestion == "walk"){
+        else if(suggestion == "cat"){
             //playerSelf.setVelocityX(160);
-            dm.innerHTML = "10%";//debug
+            //dm.innerHTML = "10%";//debug
             targetX = 600;
             targetY = 450;
             moving = 1;
-            wordofdog = "You walk over here.";
+            wordofdog = "You walk to cat.";
+            todo = 7;
             //QUESTION - Why does player go slowly the first time walk is used?
         }
-        else if(suggestion == "walk over there"){
+        else if(suggestion == "flag"){
             targetX = 500;
             targetY = 300;
             moving = 1;
-            wordofdog = "You walk over there.";
+            wordofdog = "You walk to the flag.";
+            todo = 17;
         }
         else if(suggestion == "greet"){
             targetX = 320;
@@ -352,7 +359,7 @@ function update (){
             wordofdog = "sv_cheats 1";
             processing = 100; //one-and-done built-in action
         }
-        else if(suggestion == "check friends"){
+        else if(suggestion == "friends"){
             if(friendlist.length<1){
                 wordofdog = "No friends yet!";
             }
@@ -447,6 +454,14 @@ function update (){
                     todo=0;
                     processing=4;
                 }
+                break;
+            case 7:
+                //PETPETPETPET
+                dm.innerHTML="YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT"
+                break;
+            case 17:
+                dm.innerHTML="Feels like flag.";
+                processing=100;
                 break;
             case 66:
                 playerSelf.angle=-90;
@@ -560,6 +575,7 @@ function update (){
         friend.y=350;
         dm.innerHTML="oh hey";
     }
+    if (playerSelf.x){}
 }
 
 /*
