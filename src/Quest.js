@@ -124,6 +124,7 @@ function preload (){
 }
 
 function create (){
+    this.textures.get('flag').setFilter(Phaser.Textures.FilterMode.LINEAR);
     bg1 = this.add.image(400, 300, 'room');
     this.musicRoom = this.sound.add('room');
     this.musicRoom.play();
@@ -184,6 +185,13 @@ function create (){
         key: 'waving',
         frames: this.anims.generateFrameNumbers('flag', { start: 0, end: 2 }),
         frameRate: 3,
+        repeat: -1
+    });
+
+    this.anims.create({
+        key: 'dance',
+        frames: this.anims.generateFrameNumbers('you', { start: 1, end: 2 }),
+        frameRate: 2,
         repeat: -1
     });
 
@@ -422,7 +430,7 @@ function update (){
                 dialogue_index=0;
                 dm.innerHTML=dialogue_words[dialogue_index];
                 dialogue_index++;
-                setTimeout(timerCode, 2000);
+                setTimeout(timerCode, 2000/TALKSPEED);
                 todo=3;
                 break;
             case 3:
@@ -451,7 +459,7 @@ function update (){
                 dialogue_index=0;
                 dm.innerHTML=ending_words[dialogue_index];
                 dialogue_index++;
-                setTimeout(timerCode2, 2000);
+                setTimeout(timerCode2, 2000/TALKSPEED);
                 bg2 = this.add.image(400, 230, 'hall');
                 bg1.destroy();
                 flag.destroy();
@@ -516,6 +524,11 @@ function update (){
                         volume:   0,
                         duration: 500
                     });*/
+                    friend.setScale(1);
+                    friend.x=400;
+                    friend.y=170;
+                    friend.y+=30;
+                    friend.anims.play('dance');
                 }
                 break;
             default:
