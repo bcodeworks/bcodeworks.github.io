@@ -478,6 +478,7 @@ function update (){
                     playerSelf.x-=50;
                     playerSelf.y+=30;
                     dialogue_index++;
+                    box.value = "";
                 }
                 break;
             default:
