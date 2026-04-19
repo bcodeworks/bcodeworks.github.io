@@ -106,7 +106,7 @@ function timerCode2() {
 function preload (){
     this.load.image('room', 'assets/room0.png');
     this.load.image('home', 'assets/home.webp');
-    this.load.image('flag', 'assets/asset1.png');
+    this.load.spritesheet('flag', 'assets/flag1.png', { frameWidth: 800, frameHeight: 600 });
     this.load.spritesheet('you', 'assets/spritesheet_1.png', { frameWidth: 60, frameHeight: 100 });
     this.load.spritesheet('stuff', 'assets/spritesheet_1.png', { frameWidth: 120, frameHeight: 100 });
     this.load.spritesheet('head', 'assets/spritesheet_1.png', { frameWidth: 60, frameHeight: 40 });
@@ -169,6 +169,13 @@ function create (){
         key: 'depressed',
         frames: [ { key: 'you', frame: 11 } ],
         frameRate: 20
+    });
+
+    this.anims.create({
+        key: 'waving',
+        frames: this.anims.generateFrameNumbers('flag', { start: 0, end: 2 }),
+        frameRate: 3,
+        repeat: -1
     });
 
     //create narrator box
@@ -237,6 +244,7 @@ function create (){
     //raise-flag
     flag = this.physics.add.sprite(400, 150, 'flag');
     flag.setScale(0.4);
+    flag.anims.play("waving");
 }
 
 function update (){
