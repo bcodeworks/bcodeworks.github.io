@@ -68,7 +68,11 @@ var ending_words =
     "Kinda rude.",
     "So much for the tolerant left.",
     "-errorplaceholder-",
-    "~THE END~"];
+    "",
+    "",
+    "HOLD UP",
+    "HOLD UP",
+    "~GOOD END~"];
 var debugbox;
 var friendlist = [];
 var bg1;
@@ -94,7 +98,7 @@ function timerCode() {
 function timerCode2() {
     dm.innerHTML=ending_words[dialogue_index];
     dialogue_index++;
-    if(dialogue_index>11){}
+    if(dialogue_index>ending_words.length-1){}
     else if (dialogue_index==4||dialogue_index==5) {
         setTimeout(timerCode2, 700/TALKSPEED);
     }
@@ -204,7 +208,7 @@ function create (){
 
     this.anims.create({
         key: 'dance',
-        frames: this.anims.generateFrameNumbers('you', { start: 1, end: 2 }),
+        frames: this.anims.generateFrameNumbers('you', { start: 0, end: 2 }),
         frameRate: 2,
         repeat: -1
     });
@@ -494,13 +498,15 @@ function update (){
                 break;
             case 68:
                 this.farMeow.stop();
+                PETMODE=0;
                 dialogue_index=0;
                 dm.innerHTML=ending_words[dialogue_index];
                 dialogue_index++;
                 setTimeout(timerCode2, 2000/TALKSPEED);
                 bg2 = this.add.image(400, 230, 'hall');
                 bg1.destroy();
-                flag.destroy();
+                flag.y=-2000;
+                powerfulcat.y=-2000;
                 //playerHolder.setDepth(1);
                 bg2.setScale(0.7);
                 //playerSelf.setScale(0.8);
@@ -545,13 +551,29 @@ function update (){
                 if(dialogue_index==10){
                     dm.style.fontSize = "14px";
                     playerSelf.angle=-90;
-                    playerSelf.x-=130;
-                    playerSelf.y+=60;
+                    playerSelf.x-=135;
+                    playerSelf.y+=70;
                     dialogue_index++;
                     box.value = "";
                 }
                 if(dialogue_index==12){
-                    dialogue_index=13;
+                       powerfulcat.setDepth(77);
+                       powerfulcat.x=900;
+                       powerfulcat.y=400;
+                       this.physics.moveTo(powerfulcat,500,400,69);
+                       dm.style.fontSize = "23px";
+                }
+                if(dialogue_index==15&&PETMODE<2){
+                        box.value="CAT";
+                        this.theMeow.play();
+                        PETMODE=2;
+                }
+                if(dialogue_index==ending_words.length&&PETMODE==2){
+                    playerSelf.angle=0;
+                    playerSelf.x=300;
+                    playerSelf.y=330;
+                    playerSelf.anims.play('dance');
+                    PETMODE=3;
                     dm.style.color="white";
                     this.musicEnd = this.sound.add('end', {volume:0.5});
                     this.musicEnd.play();
@@ -564,11 +586,12 @@ function update (){
                         volume:   0,
                         duration: 500
                     });*/
+                    /*
                     friend.setScale(1);
                     friend.x=400;
                     friend.y=170;
                     friend.y+=30;
-                    friend.anims.play('dance');
+                    */
                 }
                 break;
             default:
@@ -604,6 +627,10 @@ function update (){
         PETMODE=0;
         this.theMeow.stop();
         this.farMeow.play();
+    }
+    if(powerfulcat.x<500){
+        powerfulcat.body.velocity.x=0;
+        powerfulcat.x=500;
     }
 }
 
