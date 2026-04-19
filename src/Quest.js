@@ -107,9 +107,9 @@ function preload (){
     this.load.image('room', 'assets/room0.png');
     this.load.image('home', 'assets/home.webp');
     this.load.spritesheet('flag', 'assets/flag1.png', { frameWidth: 800, frameHeight: 600 });
-    this.load.spritesheet('you', 'assets/spritesheet_1.png', { frameWidth: 60, frameHeight: 100 });
-    this.load.spritesheet('stuff', 'assets/spritesheet_1.png', { frameWidth: 120, frameHeight: 100 });
-    this.load.spritesheet('head', 'assets/spritesheet_1.png', { frameWidth: 60, frameHeight: 40 });
+    this.load.spritesheet('you', 'assets/spritesheet_1b.png', { frameWidth: 60, frameHeight: 100 });
+    this.load.spritesheet('stuff', 'assets/spritesheet_1b.png', { frameWidth: 120, frameHeight: 100 });
+    this.load.spritesheet('head', 'assets/spritesheet_1b.png', { frameWidth: 60, frameHeight: 40 });
     //this.load.image('sky', 'assets/sky.png');
     //this.load.image('ground', 'assets/platform.png');
     this.load.image('star', 'assets/star.png');
