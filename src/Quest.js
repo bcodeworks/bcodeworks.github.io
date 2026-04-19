@@ -106,6 +106,14 @@ function timerCode2() {
     }
 }
 
+function catCode() {
+    dm.innerHTML=dm.innerHTML+" YOU PET THE CAT";
+    if(playerSelf.x<500||playerSelf.y<350||dm.innterHTML.length>1000){}
+    else{
+        setTimeout(catCode(), 700);
+    }
+}
+
 function preload (){
     this.load.image('room', 'assets/room0.png');
     this.load.image('hall', 'assets/hall.webp');
@@ -458,9 +466,14 @@ function update (){
             case 7:
                 //PETPETPETPET
                 dm.innerHTML="YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT"
+                //dm.innerHTML="YOU PET THE CAT";
+                todo=0;
+                processing=100;
+                //setTimeout(catCode(), 700/TALKSPEED);
                 break;
             case 17:
                 dm.innerHTML="Feels like flag.";
+                todo=0;
                 processing=100;
                 break;
             case 66:
