@@ -213,7 +213,7 @@ function create (){
     const container1 = document.getElementById('narration-area');
     dm = document.createElement('p');
     dm.style.position = "absolute";
-    dm.style.bottom = "40px";
+    dm.style.top = "469px";
     dm.style.left = "20px";
     dm.style.color = "magenta";
     dm.style.fontSize = "20px";
@@ -225,7 +225,7 @@ function create (){
     box = document.createElement('input');
     box.setAttribute('type', 'text'); //unnecessary, default
     box.style.position = "absolute";
-    box.style.bottom = "20px";
+    box.style.top = "525px";
     box.style.left = "20px";
     box.style.color = "black";
     box.style.fontSize = "20px";
@@ -553,6 +553,8 @@ function update (){
                 if(dialogue_index==12){
                     dialogue_index=13;
                     dm.style.color="white";
+                    this.musicEnd = this.sound.add('end', {volume:0.5});
+                    this.musicEnd.play();
                     this.sound.setVolume(0.5);
                     this.sound.play('end');
                     var musicEnd = this.sound.add('end');
