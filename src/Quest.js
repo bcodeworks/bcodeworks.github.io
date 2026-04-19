@@ -446,7 +446,7 @@ function update (){
                 bg1.destroy();
                 //playerHolder.setDepth(1);
                 bg2.setScale(0.7);
-                playerSelf.setScale(0.7);
+                playerSelf.setScale(0.8);
                 playerSelf.x=360;
                 playerSelf.y=420;
                 friend.y=8000;
@@ -474,11 +474,15 @@ function update (){
                     playerSelf.anims.play("depressed");
                 }
                 if(dialogue_index==10){
+                    dm.style.fontSize = "14px";
                     playerSelf.angle=-90;
                     playerSelf.x-=50;
                     playerSelf.y+=30;
                     dialogue_index++;
                     box.value = "";
+                }
+                if(dialogue_index==12){
+                    dm.style.color="white";
                 }
                 break;
             default:
