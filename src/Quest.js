@@ -106,6 +106,7 @@ function timerCode2() {
     }
 }
 
+//unused
 function catCode() {
     dm.innerHTML=dm.innerHTML+" YOU PET THE CAT";
     if(playerSelf.x<500||playerSelf.y<350||dm.innterHTML.length>1000){}
@@ -127,16 +128,20 @@ function preload (){
     //this.load.image('bomb', 'assets/bomb.png');
     //this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
 
-    //this.load.audio('room', 'assets/WaitingRoom6.mp3');
-    //this.load.audio('hall', 'assets/MadeUp-Beam-8D.mp3');
-    //this.load.audio('end', 'assets/RobotsFTW.mp3');
+    this.load.audio('room', 'assets/WaitingRoom6.mp3');
+    this.load.audio('hall', 'assets/MadeUp-Beam-8D.mp3');
+    this.load.audio('end', 'assets/RobotsFTW.mp3');
+    this.load.audio('meow', 'assets/meow.wav');
 }
 
 function create (){
+
     this.textures.get('flag').setFilter(Phaser.Textures.FilterMode.LINEAR);
     bg1 = this.add.image(400, 300, 'room');
-    //this.musicRoom = this.sound.add('room');
-    //this.musicRoom.play();
+    this.musicRoom = this.sound.add('room');
+    this.musicRoom.play();
+    this.theMeow = this.sound.add('meow', {loop:true});
+    this.farMeow = this.sound.add('meow', {loop:true,volume:0.3});
 
     targetX = spawnX;
     targetY = spawnY;
@@ -442,6 +447,7 @@ function update (){
                 }
                 break;
             case 2:
+                this.farMeow.stop();
                 dialogue_index=0;
                 dm.innerHTML=dialogue_words[dialogue_index];
                 dialogue_index++;
@@ -465,7 +471,10 @@ function update (){
                 break;
             case 7:
                 //PETPETPETPET
+                PETMODE=1;
                 dm.innerHTML="YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT YOU PET THE CAT"
+                this.farMeow.stop();
+                this.theMeow.play();
                 //dm.innerHTML="YOU PET THE CAT";
                 todo=0;
                 processing=100;
@@ -484,6 +493,7 @@ function update (){
                 processing=100;
                 break;
             case 68:
+                this.farMeow.stop();
                 dialogue_index=0;
                 dm.innerHTML=ending_words[dialogue_index];
                 dialogue_index++;
@@ -588,7 +598,11 @@ function update (){
         friend.y=350;
         dm.innerHTML="oh hey";
     }
-    if (playerSelf.x){}
+    if (PETMODE==1&&(playerSelf.x<500||playerSelf.y<350)){
+        PETMODE=0;
+        this.theMeow.stop();
+        this.farMeow.play();
+    }
 }
 
 /*
